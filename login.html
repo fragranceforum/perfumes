@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 350px;
+            background: white;
+            padding: 25px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        input:focus {
+            border-color: steelblue;
+            outline: none;
+            box-shadow: 0 0 5px rgba(70, 130, 180, 0.5);
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: black;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: steelblue;
+        }
+        .link {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .link a {
+            color: steelblue;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .link a:hover {
+            text-decoration: underline;
+        }
+        .show-password-container {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            margin-top: -5px;
+            margin-bottom: 15px;
+        }
+        .show-password-container input {
+            width: auto;
+            margin: 0 5px 0 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="Password">
+        
+        <div class="show-password-container">
+            <input type="checkbox" id="showPassword" onclick="togglePassword()">
+            <label for="showPassword">Show Password</label>
+        </div>
+
+        <button onclick="loginUser()">Login</button>
+        <p class="link">Don't have an account? <a href="index.html">Register</a></p>
+    </div>
+
+    <script>
+        function togglePassword() {
+            let passwordField = document.getElementById("loginPassword");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+
+        function loginUser() {
+            let email = document.getElementById("loginEmail").value;
+            let password = document.getElementById("loginPassword").value;
+
+            let storedUser = localStorage.getItem(email);
+
+            if (!storedUser) {
+                alert("User not found! Please register.");
+                return;
+            }
+
+            let user = JSON.parse(storedUser);
+
+            if (user.password !== password) {
+                alert("Incorrect password!");
+                return;
+            }
+
+            localStorage.setItem("loggedInUser", JSON.stringify(user));
+            alert("Login successful!");
+            window.location.href = "account.html";
+        }
+    </script>
+
+</body>
+</html>

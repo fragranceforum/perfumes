@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Authentication</title>
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 350px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: 0.3s ease;
+        }
+        input:focus {
+            border-color: steelblue;
+            outline: none;
+            box-shadow: 0 0 5px rgba(70, 130, 180, 0.5);
+        }
+        .password-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .password-container input {
+            flex: 1;
+        }
+        .password-container label {
+            font-size: 14px;
+            cursor: pointer;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: black;
+            box-shadow: 0 0 10px rgba(70, 130, 180, 0.8);
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: 0.3s ease;
+        }
+        button:hover {
+            background: #007BFF;
+            box-shadow: 0 0 10px rgba(70, 130, 180, 0.8);
+        }
+        .link {
+            margin-top: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="registerPage">
+        <h2>Register</h2>
+        <input type="text" id="regName" placeholder="Full Name">
+        <input type="tel" id="regPhone" placeholder="Phone Number">
+        <input type="email" id="regEmail" placeholder="Email">
+        
+        <div class="password-container">
+            <input type="password" id="regPassword" placeholder="Password">
+            <input type="checkbox" id="showRegPassword" onclick="togglePassword('regPassword', 'showRegPassword')">
+            <label for="showRegPassword">Show Password</label>
+        </div>
+        
+        <button onclick="registerUser()">Register</button>
+        <p class="link">Already have an account? <a href="login.html" onclick="showLogin()">Login</a></p>
+    </div>
+
+    <div class="container hidden" id="loginPage">
+        <h2>Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email">
+        
+        <div class="password-container">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <input type="checkbox" id="showLoginPassword" onclick="togglePassword('loginPassword', 'showLoginPassword')">
+            <label for="showLoginPassword">Show Password</label>
+        </div>
+
+        <button onclick="loginUser()">Login</button>
+        <p class="link">Don't have an account? <a href="index.html" onclick="showRegister()">Register</a></p>
+    </div>
+
+    <script>
+        function togglePassword(inputId, checkboxId) {
+            let passwordField = document.getElementById(inputId);
+            let checkbox = document.getElementById(checkboxId);
+            passwordField.type = checkbox.checked ? "text" : "password";
+        }
+
+        function showLogin() {
+            document.getElementById("registerPage").classList.add("hidden");
+            document.getElementById("loginPage").classList.remove("hidden");
+        }
+
+        function showRegister() {
+            document.getElementById("loginPage").classList.add("hidden");
+            document.getElementById("registerPage").classList.remove("hidden");
+        }
+
+        function registerUser() {
+            let name = document.getElementById("regName").value;
+            let phone = document.getElementById("regPhone").value;
+            let email = document.getElementById("regEmail").value;
+            let password = document.getElementById("regPassword").value;
+
+            if (name === "" || phone === "" || email === "" || password === "") {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            let user = { name, phone, email, password };
+            localStorage.setItem(email, JSON.stringify(user));
+
+            alert("Registration successful! Please login.");
+            showLogin();
+        }
+
+        function loginUser() {
+            let email = document.getElementById("loginEmail").value;
+            let password = document.getElementById("loginPassword").value;
+
+            let storedUser = localStorage.getItem(email);
+
+            if (!storedUser) {
+                alert("User not found! Please register.");
+                return;
+            }
+
+            let user = JSON.parse(storedUser);
+
+            if (user.password !== password) {
+                alert("Incorrect password!");
+                return;
+            }
+
+            localStorage.setItem("loggedInUser", JSON.stringify(user));
+            alert("Login successful! Redirecting to dashboard...");
+            window.location.href = "home.html";
+        }
+
+        window.onload = function() {
+            let user = localStorage.getItem("loggedInUser");
+            if (user) {
+                window.location.href = "account.html";
+            } else {
+                showRegister();
+            }
+        };
+    </script>
+</body>
+</html>

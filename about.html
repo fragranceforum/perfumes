@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Style for Menu Bar Icon */
+        .menu-bar {
+            position: fixed;
+            top: 2px;
+            left: -5px;
+            cursor: pointer;
+            padding: 0px;
+            border-radius: 5px;
+        }
+
+        /* Menu Icon Image */
+        .menu-bar img {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Sidebar Navigation */
+        #sidebar {
+            position: fixed;
+            top: 10;
+            left: -900px; /* Hidden by default */
+            width: 200px;
+            height: 75%;
+            color: black;
+            transition: left 0.3s;
+            background: none;
+        }
+
+        /* Sidebar List */
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Sidebar List Items */
+        #sidebar ul li {
+            padding: 5px;
+        }
+
+        /* Sidebar Links */
+        #sidebar ul li a {
+            color: black;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Sidebar Icons */
+        #sidebar ul li img {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        /* Show sidebar when active */
+        .active {
+            left: 0 !important;
+        }
+
+        /* Fix Sidebar */
+        #sidebar {
+            overflow-y: scroll;
+        }
+
+        /* Hover Effect */
+        #sidebar ul li a:hover {
+            background: whitesmoke;
+        }
+
+        /* Adjust Logout Button */
+        #sidebar button {
+            width: 60%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        /* Add to Cart */
+        .cart-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+        }
+
+        .cart-icon img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+
+       
+
+        
+        
+        /* Main content styles */
+        main {
+            padding-top: 150px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /* Contact Form & Content Styling */
+        .contact-container {
+            background: rgba(255, 255, 255, 0.7); /* Transparent White Background */
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .contact-container h2 {
+            margin-bottom: 15px;
+        }
+        .contact-container input, .contact-container select, .contact-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 2px solid black;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .send-btn {
+            padding: 10px;
+            background: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .send-btn:hover {
+            background: grey;
+        }
+
+        /* About & Fashion Tips Styling */
+        .about-section {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7); /* Dark Transparent Background */
+            color: white;
+            border-radius: 10px;
+        }
+        .about-section h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .about-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    
+
+    <!-- Menu Icon -->
+    <div class="menu-bar" onclick="toggleMenu()">
+        <img src="menu.jpg" alt="Menu">
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar">
+        <ul>
+            <li><a href="home.html"><img src="home.jpg" alt="Home"> Home</a></li>
+            <li><a href="products.html"><img src="shop.jpg" alt="Products"> Products</a></li>
+            <li><a href="feedback.html"><img src="feedback.jpg" alt="Feedback"> Feedback</a></li>
+            <li><a href="about.html"><img src="about.jpg" alt="About"> About</a></li>
+            <li><a href="ai-bot.html"><img src="ai-bot.jpg" alt="AI Bot"> AI Bot</a></li>
+            <li><a href="account.html"><img src="account.jpg" alt="Dashboard"> Account</a></li>
+            <li><a href="index.html"><img src="index.jpg" alt="Sign Up"> Sign Up</a></li>
+            <button onclick="logout()">Log Out</button>
+        </ul>
+    </nav>
+
+    <!-- Add to Cart Logo -->
+    <div class="cart-icon">
+        <a href="addtocart.html">
+            <img src="cartlogo.jpg" alt="Cart">
+        </a>
+    </div>
+    <script>
+
+    // Logout function
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            alert("You have logged out!");
+            window.location.href = "login.html";
+        }
+// Menu Toggle
+function toggleMenu() {
+    let sidebar = document.getElementById("sidebar");
+    sidebar.style.left = sidebar.style.left === "0px" ? "-250px" : "0px";
+}
+
+function logout() {
+    alert("You have been logged out.");
+    window.location.href = "login.html";
+}
+        
+    </script>
+
+</body>
+</html>
+
+
+<!-- Contact Form Section -->
+<div class="contact-container">
+    <h2>Contact fragranceforum21@gmail.com</h2>
+    <form action="https://formspree.io/f/mkgjwdgk" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="text" name="phone" placeholder="Your Phone Number">
+        <select name="inquiry_type" required>
+            <option value="">Select an Option</option>
+            <option value="general_inquiry">General Inquiry</option>
+            <option value="bulk_order">Bulk Order</option>
+            <option value="collaboration">Collaboration</option>
+            <option value="custom_request">Custom Request</option>
+            <option value="other">Other</option>
+        </select>
+        <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+        <button type="submit" class="send-btn">Send Request</button>
+    </form>
+</div>
+
+</body>
+</html>

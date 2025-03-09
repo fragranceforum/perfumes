@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Style for Menu Bar Icon */
+        .menu-bar {
+            position: fixed;
+            top: 2px;
+            left: -5px;
+            cursor: pointer;
+            padding: 0px;
+            border-radius: 5px;
+        }
+
+        /* Menu Icon Image */
+        .menu-bar img {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Sidebar Navigation */
+        #sidebar {
+            position: fixed;
+            top: 10;
+            left: -900px; /* Hidden by default */
+            width: 200px;
+            height: 75%;
+            color: black;
+            transition: left 0.3s;
+            background: none;
+        }
+
+        /* Sidebar List */
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Sidebar List Items */
+        #sidebar ul li {
+            padding: 5px;
+        }
+
+        /* Sidebar Links */
+        #sidebar ul li a {
+            color: black;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Sidebar Icons */
+        #sidebar ul li img {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        /* Show sidebar when active */
+        .active {
+            left: 0 !important;
+        }
+
+        /* Fix Sidebar */
+        #sidebar {
+            overflow-y: scroll;
+        }
+
+        /* Hover Effect */
+        #sidebar ul li a:hover {
+            background: whitesmoke;
+        }
+
+        /* Adjust Logout Button */
+        #sidebar button {
+            width: 60%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        /* Add to Cart */
+        .cart-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+        }
+
+        .cart-icon img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+
+       
+
+        
+        
+        /* Main content styles */
+        main {
+            padding-top: 150px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        /* Feedback Form */
+        .feedback-form {
+            background: white;
+            padding: 15px;
+            width: 320px;
+            margin: 30px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed; /* Position fixed to ensure it stays in view */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Center the form */
+            z-index: 10; /* Make sure it's on top of other content */
+        }
+
+        .feedback-form label {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .feedback-form input, 
+        .feedback-form select, 
+        .feedback-form textarea {
+            width: 90%;
+            padding: 4px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .feedback-form button {
+            background: brown;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+
+        .feedback-form button:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+    
+
+    <!-- Menu Icon -->
+    <div class="menu-bar" onclick="toggleMenu()">
+        <img src="menu.jpg" alt="Menu">
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar">
+        <ul>
+            <li><a href="home.html"><img src="home.jpg" alt="Home"> Home</a></li>
+            <li><a href="products.html"><img src="shop.jpg" alt="Products"> Products</a></li>
+            <li><a href="feedback.html"><img src="feedback.jpg" alt="Feedback"> Feedback</a></li>
+            <li><a href="about.html"><img src="about.jpg" alt="About"> About</a></li>
+            <li><a href="ai-bot.html"><img src="ai-bot.jpg" alt="AI Bot"> AI Bot</a></li>
+            <li><a href="account.html"><img src="account.jpg" alt="Dashboard"> Account</a></li>
+            <li><a href="index.html"><img src="index.jpg" alt="Sign Up"> Sign Up</a></li>
+            <button onclick="logout()">Log Out</button>
+        </ul>
+    </nav>
+
+    <!-- Add to Cart Logo -->
+    <div class="cart-icon">
+        <a href="addtocart.html">
+            <img src="cartlogo.jpg" alt="Cart">
+        </a>
+    </div>
+    <script>
+
+    // Logout function
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            alert("You have logged out!");
+            window.location.href = "login.html";
+        }
+// Menu Toggle
+function toggleMenu() {
+    let sidebar = document.getElementById("sidebar");
+    sidebar.style.left = sidebar.style.left === "0px" ? "-250px" : "0px";
+}
+
+function logout() {
+    alert("You have been logged out.");
+    window.location.href = "login.html";
+}
+        
+    </script>
+
+</body>
+</html>
+<!-- Feedback Form -->
+<div class="feedback-form">
+    <h2>Fragrance Forum Feedback</h2>
+    <label for="name">Enter Your Name:</label>
+    <input type="text" id="name" required>
+
+    <label for="email">Enter Your Email:</label>
+    <input type="email" id="email" required>
+
+    <label for="rating">How would you rate our website?</label>
+    <select id="rating">
+        <option>Good</option>
+        <option>Very Nice</option>
+        <option>Excellent</option>
+        <option>Poor</option>
+    </select>
+
+    <label for="feedback">Your Feedback:</label>
+    <textarea id="feedback" rows="4" required></textarea>
+
+    <button onclick="submitFeedback()">Submit</button>
+</div>
+
+<!-- JavaScript -->
+<script>
+   
+
+    function submitFeedback() {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let rating = document.getElementById("rating").value;
+        let feedback = document.getElementById("feedback").value;
+
+        let formData = new FormData();
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("rating", rating);
+        formData.append("feedback", feedback);
+
+        fetch("https://formspree.io/f/mkgjwdgk", {
+            method: "POST",
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        }).then(response => {
+            if (response.ok) {
+                alert("Thank you for your feedback!");
+            } else {
+                alert("Failed to submit feedback");
+            }
+        });
+    }
+</script>
+</body>
+</html>
+

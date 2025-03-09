@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <style>
+        /* General Styles */
+        body {
+            
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Menu Bar Icon */
+        .menu-bar {
+            position: fixed;
+            top: 5px;
+            left: -5px;
+            cursor: pointer;
+            padding: 0px;
+            border-radius: 5px;
+        }
+
+        /* Menu Icon Image */
+        .menu-bar img {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Sidebar Navigation */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Hidden by default */
+            width: 200px;
+            height: 100%;
+            color: black;
+            transition: left 0.3s;
+            background: white;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Sidebar List */
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Sidebar List Items */
+        #sidebar ul li {
+            padding: 5px;
+        }
+
+        /* Sidebar Links */
+        #sidebar ul li a {
+            color: black;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Sidebar Icons */
+        #sidebar ul li img {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        /* Show sidebar when active */
+        .active {
+            left: 0 !important;
+        }
+
+        /* Hover Effect */
+        #sidebar ul li a:hover {
+            background: whitesmoke;
+        }
+
+        /* Adjust Logout Button */
+        #sidebar button {
+            width: 60%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+        }
+
+        .cart-icon img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+
+        /* Main content styles */
+        main {
+            padding-top: 150px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /* Header Styles */
+        header {
+            margin: 20px 0;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            color: black;
+        }
+        h2 {
+            font-size: 1.5em;
+            color: black;
+        }
+        .search-bar {
+            margin: 20px 0;
+        }
+        .search-bar input {
+            padding: 10px;
+            width: 700px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .product {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+        }
+        .add-to-cart {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart:hover {
+            background-color: white;
+            color: black;
+        }
+        .cart {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .cart-count {
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu Icon -->
+ <div class="menu-bar" onclick="toggleMenu()">
+        <img src="menu.jpg" alt="Menu">
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar">
+        <ul>
+            <li><a href="home.html"><img src="home.jpg" alt="Home"> Home</a></li>
+            <li><a href="products.html"><img src="shop.jpg" alt="Products"> Products</a></li>
+            <li><a href="feedback.html"><img src="feedback.jpg" alt="Feedback"> Feedback</a></li>
+            <li><a href="about.html"><img src="about.jpg" alt="About"> About</a></li>
+            <li><a href="ai-bot.html"><img src="ai-bot.jpg" alt="AI Bot"> AI Bot</a></li>
+            <li><a href="account.html"><img src="account.jpg" alt="Dashboard"> Account</a></li>
+            <li><a href="index.html"><img src="index.jpg" alt="Dashboard"> Sign Up</a></li>
+            <button onclick="logout()">Log Out</button>
+        </ul>
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <h1>Fragrance Forum</h1>
+        <h2>Your one-stop shop for fragrances</h2>
+    </header>
+
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="Search for products" onkeyup="filterProducts()">
+    </div>
+
+    <div class="cart">
+        <a href="addtocart.html">
+        <img src="cartlogo.jpg" alt="Cart" style="width: 25px; height: 25px;"></a>
+        <span class="cart-count" id="cart-count">0</span>
+    </div>
+
+    <div class="products" id="product-list">
+        <div class="product">
+            <img src="products1.jpg" alt="Product 1">
+            <h3>The Men Company (Black)</h3>
+            <p>Price: ₹9,999</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="products2.jpg" alt="Product 2">
+            <h3>ALLURE</h3>
+            <p>Price: ₹14,950</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="products3.jpg" alt="Product 3">
+            <h3>Dior Homme Intense</h3>
+            <p>Price: ₹8,649</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="products4.jpg" alt="Product 4">
+            <h3>Tom Ford (Black Orchid Parfum)</h3>
+            <p>Price: ₹14,500</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="products5.jpg" alt="Product 5">
+            <h3>Tom Ford Noir (Extreme)</h3>
+            <p>Price: ₹17,500</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="products6.jpg" alt="Product 6">
+            <h3>CREED AVENTUS</h3>
+            <p>Price: ₹39,200</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="products7.jpg" alt="Product 7">
+            <h3>Yves Saint</h3>
+            <p>Price: ₹9,900</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="products8.jpg" alt="Product 8">
+            <h3>TOM FORD (OMRE LEATHER)</h3>
+            <p>Price: ₹15,400</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="products9.jpg" alt="Product 9">
+            <h3>SAUVAGE Dior EAU DE PARFUM</h3>
+            <p>Price: ₹8,199</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="products10.jpg" alt="Product 10">
+            <h3>BELLAVITA  (CEO MAN)</h3>
+            <p>Price: ₹1,472</p>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+    </div>
+
+    <script>
+        let cartCount = 0;
+
+        function addToCart() {
+            cartCount++;
+            document.getElementById('cart-count').innerText = cartCount;
+        }
+
+        function filterProducts() {
+            const searchInput = document.getElementById('search').value.toLowerCase();
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                const productName = product.querySelector('h3').innerText.toLowerCase();
+                if (productName.includes(searchInput)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem("loggedInUser ");
+            alert("You have logged out!");
+            window.location.href = "login.html";
+        }
+
+        // Menu Toggle
+        function toggleMenu() {
+            let sidebar = document.getElementById("sidebar");
+            sidebar.style.left = sidebar.style.left === "0px" ? "-250px" : "0px";
+        }
+        //new code
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .order-form { display: none; background: white; padding: 20px; width: 500px; margin: auto; border-radius: 10px; }
+        input, select { width: 90%; margin: 10px 0; padding: 10px; }
+        button { background: white; color: black; border: none; cursor: pointer; }
+        button:hover { background: steelblue; }
+    </style>
+</head>
+<body>
+    <h1>Select Your Fragrance &</h1>
+    <h2>click on "Buy Now" to complete your purchase</h2>
+    <select id="product-select">
+        <option value="" disabled selected>Select Product</option>
+        <option value="The Men Company (Black) - ₹9,999">The Men Company (Black) - ₹9,999</option>
+        <option value="ALLURE - ₹14,950">ALLURE - ₹14,950</option>
+        <option value="Dior Homme Intense - ₹8,649">Dior Homme Intense - ₹8,649</option>
+        <option value="High Sneakers - ₹1,399">High Sneakers - ₹1,399</option>
+        <option value="Tom Ford (Black Orchid Parfum) - ₹14,500">Tom Ford (Black Orchid Parfum) - ₹14,500</option>
+        <option value="tom Ford Noir (Extreme) - ₹17,500"> Tom Ford Noir (Extreme) - ₹17,500</option>
+        <option value="CREED AVENTUS - ₹39,200">CREED AVENTUS - ₹39,200</option>
+        <option value="Yves Saint - ₹9,900">Yves Saint - ₹9,900</option>
+        <option value="Tom Ford (Omre Leather) - ₹15,400">Tom Ford (Omre Leather) - ₹15,400</option>
+        <option value="Sauvage Dior EAU DE PARFUM - ₹8,199">Sauvage Dior EAU DE PARFUM - ₹8,199</option>
+        <option value="BELLAVITA (CEO MAN) - ₹1,472">BELLAVITA (CEO MAN) - ₹1,472</option>
+        
+
+        
+    </select>
+    <button onclick="showOrderForm()">Buy Now</button><div class="order-form" id="order-form">
+    <h3>SHOPPING DETAILS</h3>
+    <h4>Billing Counter</h4>
+    <p id="selected-product"></p>
+    <form id="order-form-submit" action="https://formspree.io/f/mkgjwdgk" method="POST">
+        <label>Quantity (Pairs):</label>
+        <input type="number" name="quantity" id="quantity" min="1" value="1" required>
+        <label>Your Name:</label>
+        <input type="text" name="name" id="name" required>
+        <label>Phone or Email:</label>
+        <input type="text" name="contact" id="contact" required>
+        <label>Select Bottle Size:</label>
+        <select name="Bottle Size" id="size" required>
+            <option>90ml Standard Large Size</option>
+            <option>100ml Standard Large Size</option>
+            <option>120ml Extra Large Size</option>
+            <option>150ml Extra Large Size</option>
+            <option>180ml Deluxe Collector's Size</option>
+            <option>200ml Deluxe Collector's Size</option>
+            <option>250ml Largest Bottle Size</option>
+        </select>
+        <input type="hidden" name="product" id="hidden-product">
+        <button type="submit">Purchase Now</button>
+    </form>
+</div>
+
+<script>
+    function showOrderForm() {
+        let product = document.getElementById("product-select").value;
+        if (!product) {
+            alert("Please select a product");
+            return;
+        }
+        document.getElementById("selected-product").innerText = "Product: " + product;
+        document.getElementById("hidden-product").value = product;
+        document.getElementById("order-form").style.display = "block";
+    }
+</script>
+</body>
+</html>
+
+

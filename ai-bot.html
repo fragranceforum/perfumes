@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        /* Style for Menu Bar Icon */
+        .menu-bar {
+            position: fixed;
+            top: 2px;
+            left: -5px;
+            cursor: pointer;
+            padding: 0px;
+            border-radius: 5px;
+        }
+
+        /* Menu Icon Image */
+        .menu-bar img {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Sidebar Navigation */
+        #sidebar {
+            position: fixed;
+            top: 10;
+            left: -900px; /* Hidden by default */
+            width: 200px;
+            height: 75%;
+            color: black;
+            transition: left 0.3s;
+            background: none;
+        }
+
+        /* Sidebar List */
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Sidebar List Items */
+        #sidebar ul li {
+            padding: 5px;
+        }
+
+        /* Sidebar Links */
+        #sidebar ul li a {
+            color: black;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Sidebar Icons */
+        #sidebar ul li img {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        /* Show sidebar when active */
+        .active {
+            left: 0 !important;
+        }
+
+        /* Fix Sidebar */
+        #sidebar {
+            overflow-y: scroll;
+        }
+
+        /* Hover Effect */
+        #sidebar ul li a:hover {
+            background: whitesmoke;
+        }
+
+        /* Adjust Logout Button */
+        #sidebar button {
+            width: 60%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        /* Add to Cart */
+        .cart-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+        }
+
+        .cart-icon img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+        /* Main content styles */
+        main {
+            padding-top: 150px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2c2f33;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chat-container {
+            width: 700px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #f2f2f2;
+            color: black;
+            flex-grow: 1;
+        }
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            max-width: 80%;
+            display: inline-block;
+        }
+        .user-message {
+            background-color: #e0e0e0;
+            color: black;
+            align-self: flex-end;
+        }
+        .bot-message {
+            background-color: #007bff;
+            color: white;
+        }
+        .input-container {
+            display: flex;
+            padding: 10px;
+            background-color: #fff;
+        }
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <!-- Menu Icon -->
+    <div class="menu-bar" onclick="toggleMenu()">
+        <img src="menu.jpg" alt="Menu">
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar">
+        <ul>
+            <li><a href="home.html"><img src="home.jpg" alt="Home"> Home</a></li>
+            <li><a href="products.html"><img src="shop.jpg" alt="Products"> Products</a></li>
+            <li><a href="feedback.html"><img src="feedback.jpg" alt="Feedback"> Feedback</a></li>
+            <li><a href="about.html"><img src="about.jpg" alt="About"> About</a></li>
+            <li><a href="ai-bot.html"><img src="ai-bot.jpg" alt="AI Bot"> AI Bot</a></li>
+            <li><a href="account.html"><img src="account.jpg" alt="Dashboard"> Account</a></li>
+            <li><a href="index.html"><img src="index.jpg" alt="Sign Up"> Sign Up</a></li>
+            <button onclick="logout()">Log Out</button>
+        </ul>
+    </nav>
+
+    <!-- Add to Cart Logo -->
+    <div class="cart-icon">
+        <a href="addtocart.html">
+            <img src="cartlogo.jpg" alt="Cart">
+        </a>
+    </div>
+    <script>
+
+    // Logout function
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            alert("You have logged out!");
+            window.location.href = "login.html";
+        }
+// Menu Toggle
+function toggleMenu() {
+    let sidebar = document.getElementById("sidebar");
+    sidebar.style.left = sidebar.style.left === "0px" ? "-250px" : "0px";
+}
+
+function logout() {
+    alert("You have been logged out.");
+    window.location.href = "login.html";
+}
+        
+    </script>
+
+</body>
+</html>
+
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <div class="message bot-message">Welcome! How can I assist you today?</div>
+        </div>
+        <div class="input-container">
+            <select id="question-select">
+                <option value="">Select a question...</option>
+                <optgroup label="General Questions">
+                    <option value="1">What is your name?</option>
+                    <option value="2">What services do you offer?</option>
+                    <option value="3">How can I contact support?</option>
+                    <option value="4">Where is your company located?</option>
+                </optgroup>
+                <optgroup label="Fragrance Forum">
+                    <option value="5">What are the best long-lasting perfumes?</option>
+                    <option value="6">How should I store my perfume?</option>
+                    <option value="7">What is the difference between Eau de Toilette and Eau de Parfum?</option>
+                    <option value="8">How do I choose the right fragrance for me?</option>
+                    <option value="9">What is fragrance performance?</option>
+                    <option value="10">How can I make my perfume last longer?</option>
+                    <option value="11">What are the best fragrances for summer?</option>
+                    <option value="12">What are the best fragrances for winter?</option>
+                    <option value="13">What is fragrance layering?</option>
+                    <option value="14">What are top, middle, and base notes in perfume?</option>
+                    <option value="15">How do I properly apply perfume?</option>
+                </optgroup>
+            </select>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let selectBox = document.getElementById("question-select");
+            let chatBox = document.getElementById("chat-box");
+            let selectedValue = selectBox.value;
+            
+            let responses = {
+                "1": "I am a chatbot designed to assist you.",
+                "2": "We offer product information, support, and guidance.",
+                "3": "You can contact support via email at support@example.com.",
+                "4": "Our company is located in Tamil Nadu, India.",
+                "5": "Some of the best long-lasting perfumes include Tom Ford Black Orchid, Chanel Coco Mademoiselle, and Dior Sauvage.",
+                "6": "Store your perfume in a cool, dark place away from direct sunlight and heat to maintain its fragrance quality.",
+                "7": "Eau de Toilette (EDT) has a lower concentration of fragrance oils (5-15%) and is lighter, while Eau de Parfum (EDP) has a higher concentration (15-20%) and lasts longer.",
+                "8": "Choose a fragrance based on your personality, preference, and occasion. Try floral scents for freshness, woody for warmth, and citrus for an energetic feel.",
+                "9": "Fragrance performance refers to how long a perfume lasts on your skin and how strong it smells over time.",
+                "10": "To make your perfume last longer, apply it to pulse points, moisturize your skin before application, and store it properly.",
+                "11": "For summer, fresh and citrusy scents like Acqua di Gio, Dior Homme Cologne, and Light Blue by Dolce & Gabbana are great choices.",
+                "12": "For winter, warm and spicy fragrances like Tom Ford Oud Wood, Yves Saint Laurent La Nuit de L'Homme, and Spicebomb by Viktor & Rolf work best.",
+                "13": "Fragrance layering involves using multiple scented products like lotions and perfumes together to create a unique and long-lasting scent.",
+                "14": "Perfume notes are classified as top (initial impression), middle (heart of the fragrance), and base notes (long-lasting foundation).",
+                "15": "Apply perfume to pulse points like wrists, neck, and behind ears. Avoid rubbing your wrists together, as it breaks down the scent faster."
+            };
+
+            if (selectedValue) {
+                let selectedText = selectBox.options[selectBox.selectedIndex].text;
+                let userMessage = document.createElement("div");
+                userMessage.classList.add("message", "user-message");
+                userMessage.innerText = selectedText;
+                chatBox.appendChild(userMessage);
+
+                let botMessage = document.createElement("div");
+                botMessage.classList.add("message", "bot-message");
+                botMessage.innerText = responses[selectedValue];
+                chatBox.appendChild(botMessage);
+
+                chatBox.scrollTop = chatBox.scrollHeight;
+                selectBox.value = "";
+            }
+        }
+    </script>
+</body>
+</html>
